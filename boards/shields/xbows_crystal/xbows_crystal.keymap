@@ -27,7 +27,7 @@
 // mouse keys are deactivated (they're transformed into no-ops) by default.
 // To use this feature, uncomment the following line (remove leading "//").
 //
-#define ENABLE_MOUSE_KEYS
+//#define ENABLE_MOUSE_KEYS
 
 #define ZMK_MOUSE_DEFAULT_MOVE_VAL 2000
 #define ZMK_MOUSE_DEFAULT_SCRL_VAL 10
