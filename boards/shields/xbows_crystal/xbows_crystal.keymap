@@ -1,0 +1,172 @@
+/*
+ * Copyright (c) 2023 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/rgb.h>
+
+#define DEFL        0 // Default
+#define SYSL        1 // System/Settings
+#define FUNL        2 // Functions
+#define MOUSL       3 // Mouse
+
+&lt {
+    flavor = "balanced";
+    tapping-term-ms = <200>;
+    quick-tap-ms = <175>;                // repeat on tap-into-hold
+    //require-prior-idle-ms = <150>;
+};
+
+//
+// ENABLE_MOUSE_KEYS activates support for mouse keys if defined; otherwise
+// mouse keys are deactivated (they're transformed into no-ops) by default.
+// To use this feature, uncomment the following line (remove leading "//").
+//
+#define ENABLE_MOUSE_KEYS
+
+#define ZMK_MOUSE_DEFAULT_MOVE_VAL 2000
+#define ZMK_MOUSE_DEFAULT_SCRL_VAL 10
+#include <dt-bindings/zmk/mouse.h>
+#ifdef ENABLE_MOUSE_KEYS
+    // ==== MOUSE-KEY <section begins> ====
+    &mmv {
+      delay-ms = <0>;
+      acceleration-exponent = <2>;
+      time-to-max-speed-ms = <500>;
+    };
+    &msc {
+      delay-ms = <0>;
+      acceleration-exponent = <0>;
+      time-to-max-speed-ms = <300>;
+    };
+    // ==== MOUSE-KEY <section ends> =====
+#else
+    //#define mkp none
+    #define mmv none
+    #define msc none
+    #undef  MOVE_UP
+    #define MOVE_UP
+    #undef  MOVE_DOWN
+    #define MOVE_DOWN
+    #undef  MOVE_LEFT
+    #define MOVE_LEFT
+    #undef  MOVE_RIGHT
+    #define MOVE_RIGHT
+    #undef  SCRL_UP
+    #define SCRL_UP
+    #undef  SCRL_DOWN
+    #define SCRL_DOWN
+    #undef  SCRL_LEFT
+    #define SCRL_LEFT
+    #undef  SCRL_RIGHT
+    #define SCRL_RIGHT
+#endif
+
+/ {
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            display-name = "Default";
+            bindings = <
+//╭─────────┬─────────┬──────┬──────┬──────┬──────┬──────╮                   ╭──────┬──────┬─────────┬────────┬────────┬─────────┬─────────┬───────╮  ╭─────────╮
+    &kp ESC  &kp GRAVE &kp N1 &kp N2 &kp N3 &kp N4 &kp N5                     &kp N6 &kp N7  &kp N8    &kp N9   &kp N0  &kp MINUS &kp EQUAL &kp DEL     &kp INS
+//╰─────────┼─────────┼──────┼──────┼──────┼──────┼──────┤                   ├──────┼──────┼─────────┼────────┼────────┼─────────┼─────────┼───────┤  ├─────────┤
+              &kp TAB  &kp Q  &kp W  &kp E  &kp R  &kp T                      &kp Y  &kp U   &kp I     &kp O    &kp P   &kp LBKT  &kp RBKT &kp BSLH     &kp HOME
+//     ╭────┴─────────┼──────┼──────┼──────┼──────┼──────┤   ╭──────────╮    ├──────┼──────┼─────────┼────────┼────────┼─────────┼─────────┼───────╯  ├─────────┤
+        &lt MOUSL CAPS &kp A  &kp S  &kp D  &kp F  &kp G       &kp BSPC       &kp H  &kp J   &kp K     &kp L   &kp SEMI &kp SQT   &kp RET               &kp END
+//╭────┴──────────────┼──────┼──────┼──────┼──────┼──────┤   ├──────────┤    ├──────┼──────┼─────────┼────────┼────────┼─────────┼─────────╯╭────────╮╰─────────╯
+    &kp LSHFT          &kp Z  &kp X  &kp C  &kp V  &kp B       &kp RET        &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT             &kp UP
+//├─────────┬─────────┼──────┼──────┴──────┼──────┴──────┼───┴─────┬────┴────┼──────┴──────┴─────────┼────────┼────────┼─────────╯ ╭────────┼────────┼─────────╮
+   &kp LCTRL  &kp LGUI         &kp LALT      &kp SPACE    &kp RCTRL &kp RSHFT  &lt FUNL SPACE         &kp RALT &mo SYSL             &kp LEFT &kp DOWN &kp RIGHT
+//╰─────────┴─────────╯      ╰─────────────┴─────────────┴─────────┴─────────┴───────────────────────┴────────┴────────╯           ╰────────┴────────┴─────────╯
+            >;
+        };
+
+#define BT_CL  &bt BT_CLR
+#define BT_CLA &bt BT_CLR_ALL
+#define BT_SL  &bt BT_SEL
+#define BT_DC  &bt BT_DISC
+#define RGB_TG &rgb_ug RGB_TOG
+#define RGB_OF &rgb_ug RGB_OFF
+#define RGB_BI &rgb_ug RGB_BRI
+#define RGB_BD &rgb_ug RGB_BRD
+#define RGB_HI &rgb_ug RGB_HUI
+#define RGB_HD &rgb_ug RGB_HUD
+#define RGB_SI &rgb_ug RGB_SAI
+#define RGB_SD &rgb_ug RGB_SAD
+#define RGB_PI &rgb_ug RGB_SPI
+#define RGB_PD &rgb_ug RGB_SPD
+#define RGB_EF &rgb_ug RGB_EFF
+#define RGB_ER &rgb_ug RGB_EFR
+#define C_VD C_VOL_DN
+#define C_VU C_VOL_UP
+
+        settings_layer {
+            display-name = "Settings";
+            bindings = <
+//╭──────┬──────┬───────┬───────┬───────┬───────┬───────╮                         ╭──────┬──────┬──────┬──────┬──────┬──────┬──────┬─────────╮      ╭────────╮
+   BT_CL  &trans BT_SL 0 BT_SL 1 BT_SL 2 BT_SL 3 BT_SL 4                           &trans &trans &trans &trans &trans &trans &trans  BT_CLA           &trans
+//╰──────┼──────┼───────┼───────┼───────┼───────┼───────┤                         ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼─────────┤      ├────────┤
+          &trans BT_DC 0 BT_DC 1 BT_DC 2 BT_DC 3 BT_DC 4                           &trans &trans &trans &trans &trans &trans &trans &soft_off         &trans
+//    ╭──┴──────┼───────┼───────┼───────┼───────┼───────┤      ╭───────────╮      ├──────┼──────┼──────┼──────┼──────┼──────┼──────┼─────────╯      ├────────┤
+        RGB_TG   RGB_BI  RGB_HI  RGB_SI  RGB_PI  RGB_EF         &bootloader        &trans &trans &trans &trans &trans &trans &trans                   &trans
+//╭───┴─────────┼───────┼───────┼───────┼───────┼───────┤      ├───────────┤      ├──────┼──────┼──────┼──────┼──────┼──────┴─┬────╯      ╭────────╮╰────────╯
+    RGB_OF       RGB_BD  RGB_HD  RGB_SD  RGB_PD  RGB_ER          &trans            &trans &trans &trans &trans &trans &kp C_PP             &kp C_VU
+//├──────┬──────┼───────┼───────┴───────┼───────┴───────┼──────┴─────┬─────┴──────┼──────┴──────┴──────┼──────┼──────┼────────╯╭──────────┼────────┼──────────╮
+   &trans &trans          &trans          &trans         &out OUT_BLE &out OUT_USB  &trans              &trans &trans           &kp C_PREV &kp C_VD &kp C_NEXT
+//╰──────┴──────╯       ╰───────────────┴───────────────┴────────────┴────────────┴────────────────────┴──────┴──────╯         ╰──────────┴────────┴──────────╯
+            >;
+        };
+
+        function_layer {
+            display-name = "Functions";
+            bindings = <
+//╭──────┬──────┬──────┬──────┬──────┬──────┬──────╮             ╭──────┬──────┬──────┬──────┬───────┬───────┬───────┬──────╮ ╭──────╮
+   &trans &trans &kp F1 &kp F2 &kp F3 &kp F4 &kp F5               &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12 &trans   &trans
+//╰──────┼──────┼──────┼──────┼──────┼──────┼──────┤             ├──────┼──────┼──────┼──────┼───────┼───────┼───────┼──────┤ ├──────┤
+          &trans &trans &trans &trans &trans &trans               &trans &trans &trans &trans &trans  &trans  &trans  &trans   &trans
+//     ╭─┴──────┼──────┼──────┼──────┼──────┼──────┤   ╭──────╮  ├──────┼──────┼──────┼──────┼───────┼───────┼───────┼──────╯ ├──────┤
+         &trans  &trans &trans &trans &trans &trans     &trans    &trans &trans &trans &trans &trans  &trans  &trans           &trans
+//╭────┴────────┼──────┼──────┼──────┼──────┼──────┤   ├──────┤  ├──────┼──────┼──────┼──────┼───────┼───────┼───────╯╭──────╮╰──────╯
+    &trans       &trans &trans &trans &trans &trans     &trans    &trans &trans &trans &trans &trans  &trans           &trans
+//├──────┬──────┼──────┼──────┴──────┼──────┴──────┼───┴──┬───┴──┼──────┴──────┴──────┼──────┼───────┼───────╯ ╭──────┼──────┼──────╮
+   &trans &trans         &trans        &trans       &trans &trans  &trans              &trans &trans            &trans &trans &trans
+//╰──────┴──────╯      ╰─────────────┴─────────────┴──────┴──────┴────────────────────┴──────┴───────╯         ╰──────┴──────┴──────╯
+            >;
+        };
+
+#define MMV_LEFT  &mmv MOVE_LEFT
+#define MMV_RIGHT &mmv MOVE_RIGHT
+#define MMV_UP    &mmv MOVE_UP
+#define MMV_DOWN  &mmv MOVE_DOWN
+#define MSC_LEFT  &msc SCRL_LEFT
+#define MSC_RIGHT &msc SCRL_RIGHT
+#define MSC_UP    &msc SCRL_UP
+#define MSC_DOWN  &msc SCRL_DOWN
+
+        mouse_layer {
+            display-name = "Mouse";
+            bindings = <
+//╭──────┬──────┬──────┬──────┬──────┬──────┬──────╮             ╭────────┬────────┬────────┬─────────┬─────────┬────────┬───────────────┬──────╮ ╭─────────╮
+   &trans &trans &trans &trans &trans &trans &trans                &trans   &trans   &trans   &trans    &trans    &trans   &trans         &trans    &trans
+//╰──────┼──────┼──────┼──────┼──────┼──────┼──────┤             ├────────┼────────┼────────┼─────────┼─────────┼────────┼───────────────┼──────┤ ├─────────┤
+          &trans &trans &trans &trans &trans &trans                &trans   MSC_UP   MMV_UP  MSC_DOWN  &kp PSCRN &kp SLCK &kp PAUSE_BREAK &trans   &kp PG_UP
+//   ╭───┴──────┼──────┼──────┼──────┼──────┼──────┤   ╭──────╮  ├────────┼────────┼────────┼─────────┼─────────┼────────┼───────────────┼──────╯ ├─────────┤
+       &trans    &trans &trans &trans &trans &trans     &trans    MSC_LEFT MMV_LEFT MMV_DOWN MMV_RIGHT MSC_RIGHT  &trans   &trans                  &kp PG_DN
+//╭──┴──────────┼──────┼──────┼──────┼──────┼──────┤   ├──────┤  ├────────┼────────┼────────┼─────────┼─────────┼────────┼───────────────╯╭──────╮╰─────────╯
+    &trans       &trans &trans &trans &trans &trans     &trans     &trans   &trans   &trans   &trans    &trans    &trans                   &trans
+//├──────┬──────┼──────┼──────┴──────┼──────┴──────┼───┴──┬───┴──┼────────┴────────┴────────┼─────────┼─────────┼────────╯         ╭──────┼──────┼──────╮
+   &trans &trans         &trans        &mkp MB1     &trans &trans  &mkp MB2                   &trans    &trans                      &trans &trans &trans
+//╰──────┴──────╯      ╰─────────────┴─────────────┴──────┴──────┴──────────────────────────┴─────────┴─────────╯                  ╰──────┴──────┴──────╯
+            >;
+        };
+
+    };
+};

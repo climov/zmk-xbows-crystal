@@ -1,0 +1,9 @@
+file_format: "1"
+id: xbows_crystal
+name: XBOWS_CRYSTAL
+type: shield
+url: https://github.com/climov/zmk-xbows-crystal
+requires: [nice_nano]
+features:
+  - keys
+  - underglow
